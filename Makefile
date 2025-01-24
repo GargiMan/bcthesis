@@ -11,6 +11,8 @@ all: $(CO).pdf
 
 pdf: $(CO).pdf
 
+presentation: $(CO)-presentation.pdf
+
 $(CO).ps: $(CO).dvi
 	dvips $(CO)
 
@@ -21,6 +23,12 @@ $(CO).pdf: clean
 	# makeglossaries-lite $(CO)
 	pdflatex $(CO)
 	pdflatex $(CO)
+
+$(CO)-presentation.pdf: clean
+	pdflatex $(CO)-presentation
+	-bibtex $(CO)-presentation
+	pdflatex $(CO)-presentation
+	pdflatex $(CO)-presentation
 
 $(CO).dvi: $(CO).tex $(CO).bib
 	latex $(CO)
@@ -43,11 +51,16 @@ rename:
 	mv $(CO)-20-literatura-bibliography.bib $(NAME)-20-literatura-bibliography.bib
 	mv $(CO)-30-prilohy-appendices.tex $(NAME)-30-prilohy-appendices.tex
 	mv $(CO)-30-prilohy-appendices-en.tex $(NAME)-30-prilohy-appendices-en.tex
+	mv $(CO)-presentation.tex $(NAME)-presentation.tex
+	mv $(CO)-presentation-slides.tex $(NAME)-presentation-slides.tex
+	mv $(CO)-presentation-slides_en.tex $(NAME)-presentation-slides_en.tex
 	sed -i "s/$(CO)-01-kapitoly-chapters/$(NAME)-01-kapitoly-chapters/g" $(NAME).tex
 	sed -i "s/$(CO)-01-kapitoly-chapters-en/$(NAME)-01-kapitoly-chapters-en/g" $(NAME).tex
 	sed -i "s/$(CO)-20-literatura-bibliography/$(NAME)-20-literatura-bibliography/g" $(NAME).tex
 	sed -i "s/$(CO)-30-prilohy-appendices/$(NAME)-30-prilohy-appendices/g" $(NAME).tex
 	sed -i "s/$(CO)-30-prilohy-appendices-en/$(NAME)-30-prilohy-appendices-en/g" $(NAME).tex
+	sed -i "s/$(CO)-presentation-slides/$(NAME)-presentation-slides/g" $(NAME)-presentation.tex
+	sed -i "s/$(CO)-presentation-slides_en/$(NAME)-presentation-slides_en/g" $(NAME)-presentation.tex
 	sed -i "s/$(CO)/$(NAME)/g" Makefile
 	
 # Pozor, vlna neresi vse (viz popis.txt) / Warning - vlna is not solving all problems (see description.txt)
