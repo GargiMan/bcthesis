@@ -37,14 +37,18 @@ $(CO).dvi: $(CO).tex $(CO).bib
 	latex $(CO)
 
 clean:
-	rm -f *.dvi *.log $(CO).blg $(CO).bbl $(CO).toc *.aux $(CO).out $(CO).lof $(CO).ptc
-	rm -f $(CO).pdf
+	rm -f *.dvi *.log $(CO)*.blg $(CO)*.bbl $(CO)*.toc *.aux $(CO)*.out $(CO)*.lof $(CO)*.ptc $(CO)*.nav $(CO)*.snm 
 	rm -f *~
+
+clean-all: clean
+	rm -f $(CO).pdf $(CO)-presentation.pdf
 
 pack:
 	tar czvf $(CO).tar.gz *.tex *.bib *.bst ./template/* ./bib-styles/* ./figures/* zadani.pdf $(CO).pdf Makefile Changelog
 
 rename:
+	mv $(CO).pdf $(NAME).pdf
+	mv $(CO)-presentation.pdf $(NAME)-presentation.pdf
 	mv $(CO).tex $(NAME).tex
 	mv $(CO)-01-kapitoly-chapters.tex $(NAME)-01-kapitoly-chapters.tex
 	mv $(CO)-01-kapitoly-chapters-en.tex $(NAME)-01-kapitoly-chapters-en.tex
